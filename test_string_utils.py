@@ -12,6 +12,11 @@ class ReverseTextTests(unittest.TestCase):
     def test_empty_text(self):
         self.assertEqual(reverse_text(""), "")
 
+    def test_empty_text_type_and_length(self):
+        result = reverse_text("")
+        self.assertIsInstance(result, str)
+        self.assertEqual(len(result), 0)
+
     def test_unicode_text(self):
         self.assertEqual(reverse_text("привет"), "тевирп")
 
