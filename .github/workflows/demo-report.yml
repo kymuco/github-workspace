@@ -1,0 +1,23 @@
+name: Demo report
+
+on:
+  push:
+    branches:
+      - 'agentrelay/bot-8502520393/1bded324776e40a8964be09317ef30e3'
+
+permissions:
+  contents: read
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Write commit SHA
+        shell: bash
+        run: printf '%s\n' "$GITHUB_SHA" > report.txt
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-report
+          path: report.txt
+          if-no-files-found: error
