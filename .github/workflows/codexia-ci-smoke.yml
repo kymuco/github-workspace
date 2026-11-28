@@ -1,0 +1,19 @@
+name: Codexia CI smoke
+on:
+  pull_request:
+    branches: [codexia-ci-smoke-base-v1]
+    types: [opened, synchronize, reopened]
+permissions:
+  contents: read
+jobs:
+  smoke:
+    if: github.event.pull_request.head.repo.full_name == github.repository && startsWith(github.head_ref, 'codexia/dw83b4-smoke-')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Run isolated unittest
+        run: python3 -B -m unittest discover -s tests/codexia_smoke -p test_probe.py -v
